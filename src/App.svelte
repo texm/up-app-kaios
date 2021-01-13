@@ -1,16 +1,21 @@
 <script>
 	import Header from "./components/Header.svelte"
 	import Balance from "./components/Balance.svelte"
+	import Transactions from "./components/Transactions.svelte"
+	
 	export let Up;
-	console.log(Up);
-	//let accs = Up.getAccounts()
-	//console.log(accs);
-	//console.log(Up.getTransactions(accs["data"][0]["id"]))
+	let accountID;
+
+	function accountLoadedEvent(event) {
+		accountID = event.detail.id;
+	}
 </script>
 
 <main>
 	<Header />
-	<Balance />
+	<Balance Up={Up} on:account-loaded={accountLoadedEvent}/>
+	<hr />
+	<Transactions Up={Up} AccountID={accountID}/>
 </main>
 
 <style>
