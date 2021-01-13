@@ -1,5 +1,5 @@
 {
-  "name": "svelte-app",
+  "name": "upbank-app",
   "version": "1.0.0",
   "scripts": {
     "build": "rollup -c",
@@ -14,8 +14,5 @@
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
     "svelte": "^3.0.0"
-  },
-  "dependencies": {
-    "sirv-cli": "^1.0.0"
   }
 }
