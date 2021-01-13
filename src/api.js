@@ -2,6 +2,7 @@ export default class UpApi {
 	constructor(api_root, api_token) {
 		this.api_root = api_root;
 		this.token = api_token;
+		this.next_transactions = {}
 	}
 
 	formatParams(params) {
@@ -14,8 +15,7 @@ export default class UpApi {
 	}
 
 
-	async apiCall(endpoint, params) {
-		let url = this.api_root + endpoint;
+	async apiCall(url, params) {
 		if (params != undefined) { 
 			url = url + this.formatParams(params) 
 		}
@@ -31,14 +31,27 @@ export default class UpApi {
 	}
 
 	async getAccounts() {
-		let res = this.apiCall("/accounts");
-		return res
+		return this.apiCall(this.api_root + "/accounts");
 	}
 
 	async getTransactions(account_id) {
-		let res = this.apiCall("/accounts/" + account_id + "/transactions", {
+		let res = await this.apiCall(this.api_root + 
+			"/accounts/" + account_id + "/transactions", {
 			"page[size]": 5,
 		});
+		this.next_transactions[account_id] = res["links"]["next"];
 		return res
+	}
+
+	async getNextTransactions(account_id) {
+		if (!(account_id in this.next_transactions)) {
+			return null
+		}
+
+		let res = await this.apiCall(this.next_transactions[account_id]);
+
+		this.next_transactions[account_id] = res["links"]["next"];
+
+		return res;
 	}
 }

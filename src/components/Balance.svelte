@@ -28,10 +28,12 @@
 	}
 
 	#spending-text {
-		font-size: 20px;
+		font-size: 18px;
 	}
 
 	#spending-balance {
 		color: #ED806A;
+		font-size: 28px;
+		font-weight: 450;
 	}
 </style>

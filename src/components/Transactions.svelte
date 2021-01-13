@@ -6,12 +6,14 @@
 
 	// days is a list of (date, transaction-list) tuples
 	let dailyTransactionList = [];
+	let prevTransactions = {}
 
 	function createDailyTransactionList(transactions) {
-		console.log(transactions);
+		prevTransactions = transactions;
+
 		let transactionDates = {};
-		for (let id in transactions["data"]) {
-			let transaction = transactions["data"][id]["attributes"];
+		for (let id in transactions) {
+			let transaction = transactions[id]["attributes"];
 			let date = new Date(transaction.createdAt);
 
 			// love timezones
@@ -40,8 +42,16 @@
 		}
 	}
 
+	function loadMoreTransactions() {
+		Up.getNextTransactions(AccountID).then(res => {
+			createDailyTransactionList(prevTransactions.concat(res["data"]));
+		})
+	}
+
 	$: if (AccountID) {
-		Up.getTransactions(AccountID).then(createDailyTransactionList);
+		Up.getTransactions(AccountID).then(res => {
+			createDailyTransactionList(res["data"])
+		});
 	}
 </script>
 
@@ -53,8 +63,22 @@
 	{/each}
 </div>
 
+<button id="load-more-button" on:click={loadMoreTransactions}>Load More</button>
+
 <style type="text/css">
 	.transaction-list {
 		margin-top: 6px;
+	}
+
+	#load-more-button {
+		width: 80%;
+		margin-top: 6px;
+		margin-left: 10%;
+		color: #E8E8E8;
+		background: #33333E;
+		border: 1px solid #363636; 
+		border-radius: 2px;
+		font-weight: 500;
+		font-size: 12px;
 	}
 </style>

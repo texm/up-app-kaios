@@ -1,13 +1,27 @@
 <script>
 	import Transaction from "./Transaction.svelte"
 
+	const months = ["January", "February", "March", "April", "May", "June",
+		"July", "August", "September", "October", "November", "December"];
+
+	const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+	function nicelyFormattedDate(dateISO) {
+		let date = new Date(dateISO);
+		let weekday = weekdays[date.getDay()];
+
+		return weekday + ", " 
+			+ date.getDate() 
+			+ " " + months[date.getMonth()];
+	}
+
 	export let transactions;
 	export let date;
 </script>
 
 <div class="transaction-day">
 	<div class="transaction-day-date">
-		<span>{date}</span>
+		<span>{nicelyFormattedDate(date)}</span>
 	</div>
 
 	<ul>
@@ -29,7 +43,7 @@
 	}
 
 	.transaction-day-date span {
-		font-size: 12px;
+		font-size: 10px;
 		margin-left: 6px;
 		margin-bottom: 2px;
 		color: rgb(30, 30, 30);
