@@ -15,27 +15,27 @@ export default class UpApi {
 	}
 
 
-	async apiCall(url, params) {
+	apiCall(url, params) {
 		if (params != undefined) { 
 			url = url + this.formatParams(params) 
+		} else {
+			params = "";
 		}
 
-		const res = await fetch(url, {
-			method: "GET",
-			headers: {
-				"Authorization": "Bearer " + this.token
-			}
-		});
+		let http = new XMLHttpRequest();
+		http.open("GET", url, false);
+		http.setRequestHeader("Authorization", "Bearer " + this.token);
+		http.send(null);
 
-		return res.json();
+		return JSON.parse(http.responseText);
 	}
 
-	async getAccounts() {
+	getAccounts() {
 		return this.apiCall(this.api_root + "/accounts");
 	}
 
-	async getTransactions(account_id) {
-		let res = await this.apiCall(this.api_root + 
+	getTransactions(account_id) {
+		let res = this.apiCall(this.api_root + 
 			"/accounts/" + account_id + "/transactions", {
 			"page[size]": 5,
 		});
@@ -43,12 +43,12 @@ export default class UpApi {
 		return res
 	}
 
-	async getNextTransactions(account_id) {
+	getNextTransactions(account_id) {
 		if (!(account_id in this.next_transactions)) {
 			return null
 		}
 
-		let res = await this.apiCall(this.next_transactions[account_id]);
+		let res = this.apiCall(this.next_transactions[account_id]);
 
 		this.next_transactions[account_id] = res["links"]["next"];
 

@@ -43,15 +43,13 @@
 	}
 
 	function loadMoreTransactions() {
-		Up.getNextTransactions(AccountID).then(res => {
-			createDailyTransactionList(prevTransactions.concat(res["data"]));
-		})
+		let res = Up.getNextTransactions(AccountID)
+		createDailyTransactionList(prevTransactions.concat(res["data"]));
 	}
 
 	$: if (AccountID) {
-		Up.getTransactions(AccountID).then(res => {
-			createDailyTransactionList(res["data"])
-		});
+		let res = Up.getTransactions(AccountID)
+		createDailyTransactionList(res["data"])
 	}
 </script>
 

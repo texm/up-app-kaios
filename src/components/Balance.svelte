@@ -5,14 +5,15 @@
 	let balance = "";
 	const dispatch = createEventDispatcher();
 
-	Up.getAccounts().then(accs => {
-		let spending_acc = accs["data"][0];
-		balance = spending_acc["attributes"]["balance"]["value"];
+	let accs = Up.getAccounts();
+	let spending_acc = accs["data"][0];
+	balance = spending_acc["attributes"]["balance"]["value"];
 
+	setTimeout(function() {
 		dispatch("account-loaded", {
 			id: spending_acc["id"]
-		})
-	})
+		});
+	}, 1000);
 </script>
 
 <div id="spending-container">
