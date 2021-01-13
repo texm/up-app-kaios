@@ -3,4 +3,4 @@ node_modules/
 app/bundle.js*
 app/bundle.css*
 
-# src/config.js
+src/config.js
