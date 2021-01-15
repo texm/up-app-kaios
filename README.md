@@ -18,4 +18,4 @@ npm install
 npm run build
 ```
 
-You will be installing the `app` folder to the phone.
+You will then install the `build` folder to the phone.
