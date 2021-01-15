@@ -2,9 +2,9 @@
 	"name": "up-app-kaios",
 	"version": "1.0.0",
 	"scripts": {
-		"build": "rollup -c",
-		"dev": "rollup -c -w",
-		"start": "sirv app"
+		"build": "mkdir -p build; cp index.html build; cp -r icons/ build; cp manifest.webapp build; rollup -c",
+		"dev": "mkdir -p build; cp index.html build; cp -r icons/ build; cp manifest.webapp build; rollup -c -w",
+		"start": "sirv build"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^16.0.0",
