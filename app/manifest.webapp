@@ -11,5 +11,9 @@
   "developer": {
     "name": "tex",
     "url": "http://texmoran.com"
+  },
+  "type": "privileged",
+  "permissions": {
+    "systemXHR": {}
   }
 }

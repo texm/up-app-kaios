@@ -22,7 +22,7 @@ export default class UpApi {
 			params = "";
 		}
 
-		let http = new XMLHttpRequest();
+		let http = new XMLHttpRequest({mozSystem: true});
 		http.open("GET", url, false);
 		http.setRequestHeader("Authorization", "Bearer " + this.token);
 		http.send(null);
