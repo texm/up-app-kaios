@@ -3,6 +3,7 @@
 	import Transactions from "./Transactions.svelte"
 
 	export let Up;
+	export let FocusedTransactionID;
 	export let Account;
 
 	let AccountID = Account["id"];
@@ -12,5 +13,7 @@
 <div id="transactions-page">
 	<Balance {AccountBalance} AccountName="Spending"/>
 	<hr />
-	<Transactions {Up} {AccountID}/>
+	<Transactions {Up} {AccountID} 
+		{FocusedTransactionID}
+		on:focus-changed/>
 </div>

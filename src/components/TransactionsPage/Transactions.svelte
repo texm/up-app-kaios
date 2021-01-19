@@ -1,11 +1,12 @@
 <script>
 	import TransactionList from "./TransactionList.svelte"
-	import { tick, onMount, onDestroy } from 'svelte';
-	import { fade } from 'svelte/transition';
+	import { tick, onMount, onDestroy, createEventDispatcher } from 'svelte';
 
 	export let Up;
 	export let AccountID;
+	export let FocusedTransactionID;
 
+	const dispatch = createEventDispatcher();
 	let el = (elId) => { return document.getElementById(elId) }
 
 	// days is a list of (date, transaction-list) tuples
@@ -54,6 +55,12 @@
 				transactions: transactionDates[dateISO]
 			})
 		}
+
+		tick().then(() => {
+			if (FocusedTransactionID != -1) {
+				focusTransaction(FocusedTransactionID);
+			}	
+		})
 	}
 
 	function loadMoreTransactions() {
@@ -62,10 +69,23 @@
 		currentlyLoading = false;
 	}
 
+	function focusTransaction(id) {
+		if (id != -1) {
+			let transactionEl = el("transaction-" + id);
+			if (transactionEl) {
+				transactionEl.focus();
+			}	
+		}
+
+		dispatch("focus-changed", {
+			id: id
+		})
+	}
+
 	function requestLoadMoreTransactions() {
 		if (!currentlyLoading) {
 			currentlyLoading = true;
-			let newId = "transaction-" + prevTransactions.length;
+			let newId = prevTransactions.length;
 
 			tick().then(() => {
 				window.scrollTo(0, document.body.scrollHeight);
@@ -74,7 +94,7 @@
 			loadMoreTransactions();
 
 			tick().then(() => {
-				el(newId).focus();
+				focusTransaction(newId);
 			});
 		}
 	}
@@ -86,9 +106,10 @@
 		let curEl = el("transaction-" + currentIndex);
 		let nextEl = el("transaction-" + next);
 		if (nextEl) {
-			nextEl.focus();
+			focusTransaction(next);
 		} else if (direction == -1 && curEl) {
 			curEl.blur();
+			focusTransaction(-1);
 		} else if (direction == 1) {
 			requestLoadMoreTransactions();
 		}
@@ -117,8 +138,7 @@
 
 <div id="transactions">
 	{#each dailyTransactionList as { date, transactions }, i}
-		<div class="transaction-list" id="transaction-list-{date}" 
-			in:fade>
+		<div class="transaction-list" id="transaction-list-{date}">
 			<TransactionList date={date} transactions={transactions} />
 		</div>
 	{/each}

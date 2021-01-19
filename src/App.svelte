@@ -15,7 +15,7 @@
 	function navigatePages(direction) {
 		let newPage = Math.min(pages.SAVINGS, 
 			Math.max(pages.SETTINGS, ActivePage + direction));
-		
+
 		if (newPage != ActivePage) {
 			ActivePage = newPage;
 		}
@@ -33,6 +33,11 @@
 	}
 	document.activeElement.addEventListener("keydown", handleKeydown);
 
+	let focusedTransactionId = -1;
+	function rememberFocus(event) {
+		focusedTransactionId = event.detail.id;
+	}
+
 	let accountData = Up.getAccounts();
 	let TransactionAccount = accountData.shift();
 	let SavingsAccounts = accountData;
@@ -44,7 +49,9 @@
 	{#if ActivePage == pages.SETTINGS}
 		<span>Settings</span>
 	{:else if ActivePage == pages.TRANSACTIONS}
-		<TransactionsPage {Up} Account={TransactionAccount}/>
+		<TransactionsPage {Up} Account={TransactionAccount} 
+			FocusedTransactionID={focusedTransactionId}
+			on:focus-changed={rememberFocus}/>
 	{:else if ActivePage == pages.SAVINGS}
 		<SavingsPage Accounts={SavingsAccounts} />
 	{/if}
