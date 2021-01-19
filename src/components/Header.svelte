@@ -1,15 +1,15 @@
 <script>
-
+	export let ActivePage;
 </script>
 
 <div class="header">
-	<div class="page-title">
+	<div class="page-title" class:page-active={ActivePage==0}>
 		<span>Up</span>
 	</div>
-	<div class="page-title page-active">
+	<div class="page-title" class:page-active={ActivePage==1}>
 		<span>Activity</span>
 	</div>
-	<div class="page-title">
+	<div class="page-title" class:page-active={ActivePage==2}>
 		<span>Savers</span>
 	</div>
 </div>

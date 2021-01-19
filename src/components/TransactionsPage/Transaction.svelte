@@ -5,12 +5,16 @@
 	let abs_amount = Math.abs(details.value / 100);
 </script>
 
-<div class="transaction">
+<div id="transaction-{details.index}" class="transaction" tabIndex="{details.index}" data-dateISO="{details.dateISO}">
 	<span class="transaction-vendor">{details.text}</span>
 	<span class="transaction-amount" class:positive>${abs_amount}</span>
 </div>
 
 <style type="text/css">
+	.transaction {
+		outline: none;
+	}
+
 	.transaction-vendor {
 		font-size: 12px;
 		color: rgb(30, 30, 30);
@@ -28,5 +32,13 @@
 
 	.transaction-amount.positive {
 		color: rgb(80, 150, 80);
+	}
+
+	.transaction:focus {
+		background: rgb(190, 190, 195);
+	}
+
+	.transaction:focus span {
+		font-weight: bold;
 	}
 </style>

@@ -54,15 +54,13 @@
 		background: rgb(220, 220, 220);
 		margin: 0;
 		padding: 0;
-		padding-bottom: 5px;
-	}
-
-	li:not(:last-child) {
-		margin-bottom: 2px;
+		padding-bottom: 2px;
+		padding-top: 2px;
 	}
 
 	hr {
 		margin-bottom: 0px;
+		margin-top: 2px;
 		color: rgb(220, 220, 220);
 		margin-left: 6px;
 		margin-right: 6px;

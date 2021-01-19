@@ -3,6 +3,18 @@ export default class UpApi {
 		this.api_root = api_root;
 		this.token = api_token;
 		this.next_transactions = {}
+
+		this.callCache = {}
+	}
+
+	cacheFresh(func) {
+		if (func in this.callCache) {
+			let date = this.callCache[func][0];
+			const age = Math.abs(date - Date.now()) / 1000;
+			return age < 30;
+		}
+
+		return false;
 	}
 
 	formatParams(params) {
@@ -31,27 +43,46 @@ export default class UpApi {
 	}
 
 	getAccounts() {
-		return this.apiCall(this.api_root + "/accounts");
+		if (this.cacheFresh("getAccounts")) {
+			return this.callCache["getAccounts"][1];
+		}
+
+		let res = this.apiCall(this.api_root + "/accounts");
+		let data = res["data"];
+
+		this.callCache["getAccounts"] = [Date.now(), data];
+		return data;
 	}
 
 	getTransactions(account_id) {
+		if (this.cacheFresh("getTransactions")) {
+			return this.callCache["getTransactions"][1];
+		}
+
 		let res = this.apiCall(this.api_root + 
 			"/accounts/" + account_id + "/transactions", {
 			"page[size]": 5,
 		});
+		let data = res["data"];
+
 		this.next_transactions[account_id] = res["links"]["next"];
-		return res
+		this.callCache["getTransactions"] = [Date.now(), data]
+
+		return data
 	}
 
 	getNextTransactions(account_id) {
-		if (!(account_id in this.next_transactions)) {
-			return null
+		if (account_id in this.next_transactions) {
+			let res = this.apiCall(this.next_transactions[account_id]);
+			let data = res["data"];
+
+			this.next_transactions[account_id] = res["links"]["next"];
+			this.callCache["getTransactions"] = [Date.now(), 
+				this.callCache["getTransactions"][1].concat(data)
+			]
+			return data;
 		}
 
-		let res = this.apiCall(this.next_transactions[account_id]);
-
-		this.next_transactions[account_id] = res["links"]["next"];
-
-		return res;
+		return null
 	}
 }

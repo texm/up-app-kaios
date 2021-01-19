@@ -1,38 +1,25 @@
 <script>
-	import { createEventDispatcher } from "svelte"
-	export let Up;
-
-	let balance = "";
-	const dispatch = createEventDispatcher();
-
-	let accs = Up.getAccounts();
-	let spending_acc = accs["data"][0];
-	balance = spending_acc["attributes"]["balance"]["value"];
-
-	setTimeout(function() {
-		dispatch("account-loaded", {
-			id: spending_acc["id"]
-		});
-	}, 1000);
+	export let AccountName = "";
+	export let AccountBalance = "";
 </script>
 
-<div id="spending-container">
-	<span id="spending-text">Spending</span>
+<div class="balance-container">
+	<span class="balance-text">{AccountName}</span>
 	<br />
-	<span id="spending-balance">${balance}</span>
+	<span class="balance-balance">${AccountBalance}</span>
 </div>
 
 <style type="text/css">
-	#spending-container {
+	.balance-container {
 		margin: 15px;
 		margin-bottom: 0;
 	}
 
-	#spending-text {
+	.balance-text {
 		font-size: 18px;
 	}
 
-	#spending-balance {
+	.balance-balance {
 		color: #ED806A;
 		font-size: 28px;
 		font-weight: 450;
