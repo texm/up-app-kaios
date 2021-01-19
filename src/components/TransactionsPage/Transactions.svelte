@@ -107,6 +107,7 @@
 		let nextEl = el("transaction-" + next);
 		if (nextEl) {
 			focusTransaction(next);
+			nextEl.scrollIntoView(direction === -1);
 		} else if (direction == -1 && curEl) {
 			curEl.blur();
 			focusTransaction(-1);
