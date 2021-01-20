@@ -8,11 +8,10 @@
 
 	function nicelyFormattedDate(dateISO) {
 		let date = new Date(dateISO);
-		let weekday = weekdays[date.getDay()];
 
-		return weekday + ", " 
-			+ date.getDate() 
-			+ " " + months[date.getMonth()];
+		return weekdays[date.getDay()] 
+			+ ", " + date.getDate() 
+			+ " "  + months[date.getMonth()];
 	}
 
 	export let transactions;

@@ -1,3 +1,5 @@
+const CACHE_TIME = 30 // seconds
+
 export default class UpApi {
 	constructor(api_root, api_token) {
 		this.api_root = api_root;
@@ -11,7 +13,7 @@ export default class UpApi {
 		if (func in this.callCache) {
 			let date = this.callCache[func][0];
 			const age = Math.abs(date - Date.now()) / 1000;
-			return age < 30;
+			return age < CACHE_TIME;
 		}
 
 		return false;

@@ -40,7 +40,7 @@
 				break;
 		}
 	}
-	document.activeElement.addEventListener("keydown", handleKeydown);
+	document.body.addEventListener("keydown", handleKeydown);
 
 	let focusedTransactionId = -1;
 	function rememberFocus(event) {
@@ -65,7 +65,3 @@
 		<SavingsPage Accounts={SavingsAccounts} />
 	{/if}
 </main>
-
-<style>
-
-</style>
