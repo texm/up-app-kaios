@@ -5,14 +5,9 @@ You can browse your transactions, available spending balance, and balance in sav
 
 ## Get started
 
-Install the dependencies
+Install the dependencies via `npm install`
 
-```bash
-cd upbank
-npm install
-```
-
-You will need to create `src/config.js` with your [personal access token](https://api.up.com.au/getting_started) like so:
+You will need to create the file `src/config.js` with your [personal access token](https://api.up.com.au/getting_started) like so:
 ```
 export default {
   "UP_TOKEN": "$YOUR_TOKEN",
@@ -22,8 +17,6 @@ export default {
 
 ## Building for the phone
 
-```bash
-npm run build
-```
+Run `npm run build`
 
-You will then install the `build` folder to the phone via WebIDE ([see here](https://sites.google.com/view/bananahackers/development/webide#h.p_zvqqyAT0XBks)).
+You will then install the new `build` folder to the phone via WebIDE ([see here](https://sites.google.com/view/bananahackers/development/webide#h.p_zvqqyAT0XBks)).
