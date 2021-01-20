@@ -5,6 +5,8 @@
 	
 	export let Up;
 
+	const SHOW_SETTINGS = false;
+
 	const pages = {
 		SETTINGS: 0,
 		TRANSACTIONS: 1,
@@ -13,8 +15,15 @@
 
 	let ActivePage = pages.TRANSACTIONS;
 	function navigatePages(direction) {
-		let newPage = Math.min(pages.SAVINGS, 
-			Math.max(pages.SETTINGS, ActivePage + direction));
+		let minPage = (SHOW_SETTINGS)
+			? pages.SETTINGS
+			: pages.TRANSACTIONS;
+
+		let newPage = Math.min(
+			pages.SAVINGS,
+			Math.max(
+				minPage,
+				ActivePage + direction));
 
 		if (newPage != ActivePage) {
 			ActivePage = newPage;

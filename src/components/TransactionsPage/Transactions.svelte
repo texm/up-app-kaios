@@ -110,6 +110,7 @@
 			nextEl.scrollIntoView(direction === -1);
 		} else if (direction == -1 && curEl) {
 			curEl.blur();
+			window.scrollTo(0, 0);
 			focusTransaction(-1);
 		} else if (direction == 1) {
 			requestLoadMoreTransactions();
