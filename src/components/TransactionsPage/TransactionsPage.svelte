@@ -7,7 +7,7 @@
 	export let Account;
 
 	let AccountID = Account["id"];
-	let AccountBalance = Account["attributes"]["balance"]["value"]
+	let AccountBalance = Account["attributes"]["balance"]["valueInBaseUnits"];
 </script>
 
 <div id="transactions-page">

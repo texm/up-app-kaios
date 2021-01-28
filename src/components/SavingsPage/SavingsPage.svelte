@@ -7,7 +7,7 @@
 
 <div id="savings-page">
 	{#each Accounts as account, i}
-		<Balance AccountBalance={account.attributes.balance.value} 
+		<Balance AccountBalance={account.attributes.balance.valueInBaseUnits} 
 		AccountName={account.attributes.displayName}/>
 		{#if (i+1) != Accounts.length }
 			<hr />
