@@ -1,6 +1,6 @@
 # Upbank KaiOS app
 
-This is a basic (read-only) KaiOS app for Up Bank, using the v1 API.
+This is a read-only KaiOS app for [Up Bank](https://up.com.au), using the v1 API.
 You can browse your transactions, available spending balance, and balance in savers.
 
 ## Get started
